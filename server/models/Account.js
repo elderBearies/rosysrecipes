@@ -17,7 +17,7 @@ const AccountSchema = new mongoose.Schema({
     match: /^[A-Za-z0-9_\-.]{1,16}$/,
   },
   favorites: {
-	type: Array,	
+    type: Array,
   },
   salt: {
     type: Buffer,

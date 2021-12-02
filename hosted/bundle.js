@@ -31,11 +31,43 @@ var RecipeList = function RecipeList(props) {
   }, recipeNodes));
 };
 
+var Recipe = function Recipe(props) {
+  var recipe = props.recipe;
+  var key = 0;
+
+  var deChunk = function deChunk(chunk, tag) {
+    var comp = chunk.map(function (para) {
+      return /*#__PURE__*/React.createElement("p", {
+        key: key++,
+        className: tag
+      }, para);
+    });
+    return comp;
+  };
+
+  return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("h1", {
+    className: "title"
+  }, " ", recipe.name, " "), /*#__PURE__*/React.createElement("img", {
+    src: recipe.img,
+    alt: recipe.name
+  }), /*#__PURE__*/React.createElement("section", {
+    className: "intro"
+  }, " ", deChunk(recipe.intro, 'para'), " "), /*#__PURE__*/React.createElement("section", {
+    className: "ingredients"
+  }, /*#__PURE__*/React.createElement("h2", {
+    className: "subTitle"
+  }, " Ingredients: "), deChunk(recipe.ingredients, 'ingredient')), /*#__PURE__*/React.createElement("section", {
+    className: "procedure"
+  }, /*#__PURE__*/React.createElement("h2", {
+    className: "subTitle"
+  }, " Procedure: "), deChunk(recipe.procedure, 'step')));
+};
+
 var loadFromServer = function loadFromServer() {
   sendAjax('GET', '/loadRecipes', null, function (data) {
     ReactDOM.render( /*#__PURE__*/React.createElement(RecipeList, {
       recipes: data.recipes
-    }), document.querySelector('#allRecipes'));
+    }), document.querySelector('#recipe'));
   });
 };
 
@@ -46,22 +78,30 @@ var getAcct = function getAcct() {
   });
 };
 
-var setup = function setup(csrf) {
-  ReactDOM.render( /*#__PURE__*/React.createElement(RecipeList, {
-    recipes: []
-  }), document.querySelector('#allRecipes'));
-  getAcct();
-  loadFromServer();
+var loadPage = function loadPage() {
+  var dataStr = document.querySelector('#data').innerHTML;
+  var data = dataStr.length > 0 ? JSON.parse(dataStr) : false;
+  console.log(data);
+
+  if (!data) {
+    ReactDOM.render( /*#__PURE__*/React.createElement(RecipeList, {
+      recipes: []
+    }), document.querySelector('#recipe'));
+    return loadFromServer();
+  }
+
+  ReactDOM.render( /*#__PURE__*/React.createElement(Recipe, {
+    recipe: data
+  }), document.querySelector('#recipe'));
 };
 
-var getToken = function getToken() {
-  sendAjax('GET', '/getToken', null, function (result) {
-    setup(result.csrfToken);
-  });
+var setup = function setup() {
+  getAcct();
+  loadPage();
 };
 
 $(document).ready(function () {
-  getToken();
+  setup();
 });
 "use strict";
 

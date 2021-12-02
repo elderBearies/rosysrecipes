@@ -27,10 +27,39 @@ const RecipeList = function(props) {
   );
 };
 
+const Recipe = function(props) {
+  const recipe = props.recipe;
+  let key = 0;
+  const deChunk = (chunk, tag) => {
+    const comp = chunk.map((para) => {
+	  return (
+	    <p key={key++} className={tag}>{para}</p>
+	  );
+	});
+    return comp;
+  }
+  
+  return (
+    <React.Fragment>
+      <h1 className='title'> {recipe.name} </h1>
+	  <img src={recipe.img} alt={recipe.name} />
+	  <section className='intro'> {deChunk(recipe.intro, 'para')} </section>
+	  <section className='ingredients'>
+	    <h2 className='subTitle'> Ingredients: </h2>
+		{deChunk(recipe.ingredients, 'ingredient')}
+	  </section>
+	  <section className='procedure'>
+	    <h2 className='subTitle'> Procedure: </h2>
+		{deChunk(recipe.procedure, 'step')}
+	  </section>
+	</React.Fragment>
+  );
+}
+
 const loadFromServer = () => {
   sendAjax('GET', '/loadRecipes', null, (data) => {
     ReactDOM.render(
-      <RecipeList recipes={data.recipes} />, document.querySelector('#allRecipes')
+      <RecipeList recipes={data.recipes} />, document.querySelector('#recipe')
     );	
   });
 };
@@ -42,24 +71,32 @@ const getAcct = () => {
   });
 };
 
-const setup = function(csrf) {
-  
+const loadPage = () => {
+  const dataStr = document.querySelector('#data').innerHTML;
+  const data = dataStr.length > 0 ? JSON.parse(dataStr) : false;
+  console.log(data);
+  if (!data){
+	ReactDOM.render(
+      <RecipeList recipes={[]} />, document.querySelector('#recipe')
+    );  
+    return loadFromServer();
+  }
   ReactDOM.render(
-    <RecipeList recipes={[]} />, document.querySelector('#allRecipes')
+    <Recipe recipe={data} />, document.querySelector('#recipe')
   );
   
-  getAcct();
-  loadFromServer();
-};
+}
 
-const getToken = () => {
-  sendAjax('GET', '/getToken', null, (result) => {
-    setup(result.csrfToken); 
-  });
+const setup = function() {
+  
+  
+  
+  getAcct();
+  loadPage();
 };
 
 
 
 $(document).ready(function() {
-  getToken();
+  setup();
 });

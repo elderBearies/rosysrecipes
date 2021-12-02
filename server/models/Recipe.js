@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const _ = require('underscore');
 
 let RecipeModel = {};
 
@@ -18,23 +17,18 @@ const RecipeSchema = new mongoose.Schema({
   },
 
   intro: {
-	type: Array,
-    required: true,	
+    type: Array,
+    required: true,
   },
-  
+
   ingredients: {
-	type: Array,
-    required: true,	
+    type: Array,
+    required: true,
   },
-  
+
   procedure: {
-	type: Array,
-	required: true,
-  },
-  
-  createdDate: {
-    type: Date,
-    default: Date.now,
+    type: Array,
+    required: true,
   },
 });
 
@@ -55,9 +49,7 @@ RecipeSchema.statics.findById = (id, callback) => {
   return RecipeModel.findOne(search, callback);
 };
 
-RecipeSchema.statics.getAll = (callback) => {
-  return RecipeModel.find().lean().exec(callback);
-}
+RecipeSchema.statics.getAll = (callback) => RecipeModel.find().lean().exec(callback);
 
 RecipeModel = mongoose.model('Recipe', RecipeSchema);
 
