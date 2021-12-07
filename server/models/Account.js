@@ -16,6 +16,10 @@ const AccountSchema = new mongoose.Schema({
     unique: true,
     match: /^[A-Za-z0-9_\-.]{1,16}$/,
   },
+  name: {
+    type: String,
+    required: true,
+  },
   favorites: {
     type: Array,
   },
@@ -31,12 +35,17 @@ const AccountSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
+  editor: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 AccountSchema.statics.toAPI = (doc) => ({
   // _id is built into your mongo document and is guaranteed to be unique
   username: doc.username,
   favorites: doc.favorites,
+  editor: doc.editor,
   _id: doc._id,
 });
 

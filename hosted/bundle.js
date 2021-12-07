@@ -88,11 +88,13 @@ var loadPage = function loadPage() {
       recipes: []
     }), document.querySelector('#recipe'));
     return loadFromServer();
+  } else if (data.name) {
+    ReactDOM.render( /*#__PURE__*/React.createElement(Recipe, {
+      recipe: data
+    }), document.querySelector('#recipe'));
+  } else if (data.home) {
+    console.log('home page!');
   }
-
-  ReactDOM.render( /*#__PURE__*/React.createElement(Recipe, {
-    recipe: data
-  }), document.querySelector('#recipe'));
 };
 
 var setup = function setup() {
@@ -107,9 +109,6 @@ $(document).ready(function () {
 
 var handleError = function handleError(message) {
   $('#errorMessage').text(message);
-  $('#domoMessage').animate({
-    width: 'toggle'
-  }, 350);
 };
 
 var redirect = function redirect(response) {

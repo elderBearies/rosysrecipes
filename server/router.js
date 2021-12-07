@@ -6,7 +6,6 @@ const router = (app) => {
   app.post('/login', mid.requiresSecure, controllers.Account.login);
   app.get('/recipe/:id', (req, res) => controllers.Recipe.loadOne(req, res, req.params.id));
   app.get('/loadRecipes', controllers.Recipe.loadAll);
-  app.get('/getToken', mid.requiresSecure, controllers.Account.getToken);
   app.get('/getName', mid.requiresLogin, controllers.Account.getName);
   app.post('/signup', mid.requiresSecure, mid.requiresLogout, controllers.Account.signup);
   app.get('/logout', mid.requiresLogin, controllers.Account.logout);

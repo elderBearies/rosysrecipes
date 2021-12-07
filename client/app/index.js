@@ -80,11 +80,13 @@ const loadPage = () => {
       <RecipeList recipes={[]} />, document.querySelector('#recipe')
     );  
     return loadFromServer();
+  } else if (data.name) {
+    ReactDOM.render(
+      <Recipe recipe={data} />, document.querySelector('#recipe')
+    );
+  } else if (data.home) {
+	console.log('home page!');
   }
-  ReactDOM.render(
-    <Recipe recipe={data} />, document.querySelector('#recipe')
-  );
-  
 }
 
 const setup = function() {

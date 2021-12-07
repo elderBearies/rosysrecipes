@@ -2,11 +2,9 @@ const handleLogin = (e) => {
   e.preventDefault();
   
   if($('#user').val() == '' || $('#pass').val() == '') {
-    handleError('Username or password is empty!');
+    handleError('Please fill out all fields!');
 	return false;
   }
-  
-  console.log($('input[name=_csrf]').val());
   
   sendAjax('POST', $('#loginForm').attr('action'), $('#loginForm').serialize(), redirect);
   
@@ -16,8 +14,8 @@ const handleLogin = (e) => {
 const handleSignup = (e) => {
   e.preventDefault();
   
-  if ($('#user').val() == '' || $('#name').val() == '' || $('#pass').val() == '' || $('#pass2').val() == '') {
-    handleError('All fields are required!');
+  if ($('#user').val() == '' || $('#pass').val() == '' || $('#pass2').val() == '') {
+    handleError('Please fill out all required fields!');
     return false;
   }
   
@@ -31,7 +29,7 @@ const handleSignup = (e) => {
   return false;
 };
 
-const LoginWindow = (props) => {
+const LoginWindow = () => {
   return (
   <form id='loginForm' name='loginForm'
         onSubmit={handleLogin}
@@ -43,13 +41,12 @@ const LoginWindow = (props) => {
     <input id='user' type='text' name='username' placeholder='username' />
     <label htmlFor='pass'>Password: </label>
     <input id='pass' type='password' name='pass' placeholder='password' />
-    <input type='hidden' name='_csrf' value={props.csrf} />
     <input className='formSubmit' type='submit' value='Sign in' />
   </form>
   );
 };
 
-const SignupWindow = (props) => {
+const SignupWindow = () => {
   return (
   <form id='signupForm' 
         name='signupForm'
@@ -58,15 +55,14 @@ const SignupWindow = (props) => {
 		method='POST'
 		className='mainForm'
     >
-    <label htmlFor='username'>Username: </label>
+    <label htmlFor='username'>Username*: </label>
     <input id='user' type='text' name='username' placeholder='username' />
 	<label htmlFor='name'>Name: </label>
 	<input id='name' type='text' name='name' placeholder='your name here' />
-    <label htmlFor='pass'>Password: </label>
+    <label htmlFor='pass'>Password*: </label>
     <input id='pass' type='password' name='pass' placeholder='password' />
-    <label htmlFor='pass2'>Password again: </label>
+    <label htmlFor='pass2'>Password again*: </label>
     <input id='pass2' type='password' name='pass2' placeholder='retype password' />
-    <input type='hidden' name='_csrf' value={props.csrf} />
     <input className='formSubmit' type='submit' value='Sign up' />
   </form>
   );
@@ -74,43 +70,37 @@ const SignupWindow = (props) => {
 
 const createLoginWindow = (csrf) => {
   ReactDOM.render(
-    <LoginWindow csrf={csrf} />,
+    <LoginWindow />,
     document.querySelector('#content')
   );
 };
 
-const createSignupWindow = (csrf) => {
+const createSignupWindow = () => {
   ReactDOM.render(
-    <SignupWindow csrf={csrf} />,
+    <SignupWindow />,
     document.querySelector('#content')
   );
 };
 
-const setup = (csrf) => {
+const setup = () => {
   const loginButton = document.querySelector('#loginButton');
   const signupButton = document.querySelector('#signupButton');
   
   signupButton.addEventListener('click', (e) => {
     e.preventDefault();
-    createSignupWindow(csrf);
+    createSignupWindow();
     return false;	
   });
   
   loginButton.addEventListener('click', (e) => {
     e.preventDefault();
-    createLoginWindow(csrf);
+    createLoginWindow();
     return false;	
   });
   
-  createLoginWindow(csrf); // default view
-};
-
-const getToken = () => {
-  sendAjax('GET', '/getToken', null, (result) => {
-    setup(result.csrfToken); 
-  });
+  createLoginWindow(); // default view
 };
 
 $(document).ready(function() {
-  getToken();
+  setup();
 });
