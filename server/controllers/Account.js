@@ -1,6 +1,7 @@
 const models = require('../models');
 
 const { Account } = models;
+const { Recipe } = models;
 
 const loginPage = (req, res) => {
   res.render('login');
@@ -95,8 +96,58 @@ const getName = (request, response) => {
   });
 };
 
+const addFavorite = (request, response) => {
+  const req = request;
+  const res = response;
+  const { recipID } = req.body;
+  return Account.AccountModel.findByUsername(req.session.account.username, (err, docs) => {
+    if (err) {
+      console.log(err);
+      return res.status(400).json({ error: 'An error occured!' });
+    }
+    const acct = docs;
+    return Recipe.RecipeModel.findById(recipID, (er, doc) => {
+      if (er) {
+        console.log(er);
+        return res.status(400).json({ error: 'An error occured!' });
+      }
+      if (!acct.favorites.reduce((count, curr) => {
+        let nCount = count;
+        if (curr.name === doc.name) nCount += 1;
+        return nCount;
+      }, 0)) {
+        acct.favorites.push({ _id: doc._id, name: doc.name });
+        acct.save();
+      }
+      return res.status(204).json({ msg: 'Success!' });
+    });
+  });
+};
+
+const removeFavorite = (request, response) => {
+  const req = request;
+  const res = response;
+  const toRemove = parseInt(req.body.toRemove, 10);
+  return Account.AccountModel.findByUsername(req.session.account.username, (err, docs) => {
+    if (err) {
+      console.log(err);
+      return res.status(400).json({ error: 'An error occured!' });
+    }
+    const acct = docs;
+    const outputArr = [];
+    for (let i = 0; i < acct.favorites.length; i++) {
+      if (i !== toRemove) outputArr.push(acct.favorites[i]);
+    }
+    acct.favorites = outputArr;
+    acct.save();
+    return res.status(204).json({ msg: 'Success!' });
+  });
+};
+
 module.exports.loginPage = loginPage;
 module.exports.login = login;
 module.exports.logout = logout;
 module.exports.signup = signup;
 module.exports.getName = getName;
+module.exports.addFavorite = addFavorite;
+module.exports.removeFavorite = removeFavorite;

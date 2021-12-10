@@ -1,3 +1,12 @@
 #data {
   display: none;
 }
+.recipeImg {
+  width: 512px;
+  float: right;
+}
+.card-content {
+  text-align: center;
+  padding: 0;
+  margin: 0;
+}

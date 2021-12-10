@@ -31,6 +31,7 @@ const handleSignup = (e) => {
 
 const LoginWindow = () => {
   return (
+  <div className='box'>
   <form id='loginForm' name='loginForm'
         onSubmit={handleLogin}
 		action='/login'
@@ -43,11 +44,13 @@ const LoginWindow = () => {
     <input id='pass' type='password' name='pass' placeholder='password' />
     <input className='formSubmit' type='submit' value='Sign in' />
   </form>
+  </div>
   );
 };
 
 const SignupWindow = () => {
   return (
+  <div className = 'box'>
   <form id='signupForm' 
         name='signupForm'
         onSubmit={handleSignup}
@@ -65,6 +68,7 @@ const SignupWindow = () => {
     <input id='pass2' type='password' name='pass2' placeholder='retype password' />
     <input className='formSubmit' type='submit' value='Sign up' />
   </form>
+  </div>
   );
 };
 

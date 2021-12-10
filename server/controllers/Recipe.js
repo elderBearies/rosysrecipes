@@ -20,7 +20,7 @@ const loadOne = (req, res) => {
       return res.status(400).json({ error: 'An error occurred!' });
     }
 
-    return res.render('app', { recipe: JSON.stringify(docs) });
+    return res.render('app', { data: JSON.stringify(docs) });
   });
 };
 

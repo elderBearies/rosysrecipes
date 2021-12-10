@@ -30,7 +30,9 @@ var handleSignup = function handleSignup(e) {
 };
 
 var LoginWindow = function LoginWindow() {
-  return /*#__PURE__*/React.createElement("form", {
+  return /*#__PURE__*/React.createElement("div", {
+    className: "box"
+  }, /*#__PURE__*/React.createElement("form", {
     id: "loginForm",
     name: "loginForm",
     onSubmit: handleLogin,
@@ -55,11 +57,13 @@ var LoginWindow = function LoginWindow() {
     className: "formSubmit",
     type: "submit",
     value: "Sign in"
-  }));
+  })));
 };
 
 var SignupWindow = function SignupWindow() {
-  return /*#__PURE__*/React.createElement("form", {
+  return /*#__PURE__*/React.createElement("div", {
+    className: "box"
+  }, /*#__PURE__*/React.createElement("form", {
     id: "signupForm",
     name: "signupForm",
     onSubmit: handleSignup,
@@ -98,7 +102,7 @@ var SignupWindow = function SignupWindow() {
     className: "formSubmit",
     type: "submit",
     value: "Sign up"
-  }));
+  })));
 };
 
 var createLoginWindow = function createLoginWindow(csrf) {

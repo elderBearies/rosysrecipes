@@ -1,6 +1,8 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Rosy's Recipes Revamped</title>
   <script crossorigin src="https://unpkg.com/react@17/umd/react.development.js"></script>
   <script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
@@ -9,15 +11,27 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/remarkable/1.6.2/remarkable.min.js"></script>
   <link rel="shortcut icon" href="/assets/img/favicon.png"/>
   <link rel="stylesheet" type="text/css" href="/assets/style.css"/>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
 </head>
-  <nav><div class="navlink"><a href="/">Home</a></div>
-    <div class="navlink"><a id="loginButton" href="/login">Login</a></div>
-    <div class="navlink"><a id="signupButton" href="/signup">Create Account</a></div>
+<header>
+  <nav class='navbar' role='navigation' aria-label='main navigation'>
+    <div class="navbar-brand">
+	<a class='navbar-item' href="/">Home</a>
+	<a id="loginButton" class='navbar-item' href="/login">Login</a>
+	<a id="logoutButton" class='navbar-item' href="/logout">Log Out</a>
+	<a id="recipesPage" class='navbar-item' href='/allRecipes'>All Recipes</a>
+	<a id="favoritesPage" class='navbar-item' href="/favorites">Favorites</a>
+	</div>
   </nav>
+</header>
 <body>
+  <button id="favoriteButton" class='button is-warning is-small'>Add Favorite</button>
   <section id="recipe">
   </section>
-  <div id='data'>{{recipe}}</div>
+  <div id='data'>{{data}}</div>
   <script src="/assets/bundle.js"></script>
 </body>
+<footer>
+  <p>Site created by Ava Feldman, 2021</p>
+</footer>
 </html>
