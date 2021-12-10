@@ -111,7 +111,7 @@ const getAcct = () => {
     ReactDOM.render(
 	  <FavoriteList recipes={data.account.favorites} />, document.querySelector('#recipe')
 	);
-	let removeButtons = document.querySelectorAll('.removeFave');
+	let removeButtons = document.querySelectorAll('.button is-danger is-small');
 	for (let button of removeButtons) {
 		button.onclick = (e) => {
 	      sendAjax('DELETE', '/removeFavorite', {toRemove: e.target.dataset.toremove}, (data) => {
