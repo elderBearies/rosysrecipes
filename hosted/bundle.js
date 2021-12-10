@@ -69,7 +69,7 @@ var FavoriteList = function FavoriteList(props) {
     }, " ", recipe.name, " "), /*#__PURE__*/React.createElement("div", {
       className: "card-content"
     }, /*#__PURE__*/React.createElement("button", {
-      className: "button is-danger is-small",
+      className: "button is-danger is-small remover",
       "data-toremove": index
     }, "Unfavorite")));
   });
@@ -128,7 +128,8 @@ var getAcct = function getAcct() {
     ReactDOM.render( /*#__PURE__*/React.createElement(FavoriteList, {
       recipes: data.account.favorites
     }), document.querySelector('#recipe'));
-    var removeButtons = document.querySelectorAll('.removeFave');
+    var removeButtons = document.querySelectorAll('.remover');
+    console.log(removeButtons);
 
     var _iterator = _createForOfIteratorHelper(removeButtons),
         _step;

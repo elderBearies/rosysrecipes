@@ -54,7 +54,7 @@ const FavoriteList = function(props) {
 	  <div key={recipe._id} className='card'>
 		<a className='card-header-title is-centered' href={recipeUrl}> {recipe.name} </a>
 	    <div className='card-content'>
-		  <button className='button is-danger is-small' data-toremove={index}>Unfavorite</button>
+		  <button className='button is-danger is-small remover' data-toremove={index}>Unfavorite</button>
 	    </div>
 	  </div>
 	);
@@ -111,7 +111,8 @@ const getAcct = () => {
     ReactDOM.render(
 	  <FavoriteList recipes={data.account.favorites} />, document.querySelector('#recipe')
 	);
-	let removeButtons = document.querySelectorAll('.button is-danger is-small');
+	let removeButtons = document.querySelectorAll('.remover');
+	console.log(removeButtons);
 	for (let button of removeButtons) {
 		button.onclick = (e) => {
 	      sendAjax('DELETE', '/removeFavorite', {toRemove: e.target.dataset.toremove}, (data) => {
