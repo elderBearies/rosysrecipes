@@ -13,7 +13,7 @@ const router = (app) => {
   app.delete('/removeFavorite', mid.requiresLogin, controllers.Account.removeFavorite);
   app.get('/allRecipes', (req, res) => res.render('app', { data: JSON.stringify({ list: true }) }));
   app.get('/favorites', mid.requiresLogin, (req, res) => res.render('app', { data: JSON.stringify({ faves: true }) }));
-  app.get('/', (req, res) => res.render('app'));
+  app.get('/*', (req, res) => res.render('app')); //just goes back to homepage if the page isn't found
 };
 
 module.exports = router;
